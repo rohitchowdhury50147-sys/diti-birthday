@@ -3,583 +3,616 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Diti ✦</title>
+<title>A Little Something ✦</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@400;500;600&family=Caveat:wght@500;600&display=swap');
-
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
-:root{
-  --bg:#080b18;
-  --card:rgba(255,255,255,.075);
-  --line:rgba(255,255,255,.14);
-  --text:#f8f5ff;
-  --muted:#bdb8ca;
-  --pink:#f2c9df;
-  --lav:#d8d0ff;
+html,body{
+  width:100%;
+  min-height:100%;
 }
 
 body{
-  min-height:100vh;
+  overflow-x:hidden;
+  background:#070b1d;
+  color:#f8f5f2;
+  font-family:"DM Sans",sans-serif;
+}
+
+/* ================= BACKGROUND ================= */
+
+.bg{
+  position:fixed;
+  inset:0;
   overflow:hidden;
+  z-index:-5;
   background:
-    radial-gradient(circle at 20% 20%,rgba(126,104,190,.15),transparent 30%),
-    radial-gradient(circle at 80% 75%,rgba(224,145,186,.10),transparent 30%),
-    var(--bg);
-  color:var(--text);
-  font-family:'DM Sans',sans-serif;
+    radial-gradient(circle at 20% 20%,rgba(137,113,255,.16),transparent 32%),
+    radial-gradient(circle at 80% 25%,rgba(255,142,190,.12),transparent 30%),
+    radial-gradient(circle at 50% 90%,rgba(91,120,255,.13),transparent 35%),
+    #070b1d;
 }
 
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.045;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
-  z-index:50;
+.aurora{
+  position:absolute;
+  width:70vw;
+  height:70vw;
+  max-width:650px;
+  max-height:650px;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.35;
+  animation:auroraMove 12s ease-in-out infinite alternate;
 }
 
-#stars{
-  position:fixed;
+.a1{
+  background:#7667ff;
+  top:-25%;
+  left:-20%;
+}
+
+.a2{
+  background:#e985b8;
+  right:-25%;
+  top:15%;
+  animation-delay:-4s;
+}
+
+.a3{
+  background:#5d91ff;
+  bottom:-35%;
+  left:30%;
+  animation-delay:-7s;
+}
+
+@keyframes auroraMove{
+  0%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(8vw,5vh) scale(1.12);}
+  100%{transform:translate(-5vw,9vh) scale(.95);}
+}
+
+/* stars */
+
+.stars{
+  position:absolute;
   inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:1;
 }
 
 .star{
   position:absolute;
   width:2px;
   height:2px;
-  background:white;
   border-radius:50%;
-  opacity:.5;
-  animation:twinkle 3s infinite ease-in-out;
+  background:white;
+  opacity:.45;
+  animation:twinkle 3s ease-in-out infinite;
 }
 
 @keyframes twinkle{
-  0%,100%{opacity:.2;transform:scale(.8)}
-  50%{opacity:.9;transform:scale(1.5)}
+  0%,100%{opacity:.15;transform:scale(.7);}
+  50%{opacity:.9;transform:scale(1.5);}
 }
 
+/* grain */
+
+.grain{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:50;
+  opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+/* ================= APP ================= */
+
 #app{
-  position:relative;
-  z-index:2;
-  width:100%;
-  height:100vh;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px 18px;
 }
 
 .screen{
-  position:absolute;
-  inset:0;
-  display:flex;
-  justify-content:center;
+  width:min(680px,100%);
+  min-height:620px;
+  display:none;
   align-items:center;
-  padding:28px 18px;
-  opacity:0;
-  visibility:hidden;
-  transform:scale(.97) translateY(18px);
-  transition:
-    opacity .7s ease,
-    transform .8s cubic-bezier(.2,.75,.2,1),
-    visibility .7s;
+  justify-content:center;
+  animation:screenIn .8s cubic-bezier(.2,.8,.2,1);
 }
 
 .screen.active{
-  opacity:1;
-  visibility:visible;
-  transform:scale(1) translateY(0);
+  display:flex;
+}
+
+@keyframes screenIn{
+  from{
+    opacity:0;
+    transform:translateY(22px) scale(.98);
+    filter:blur(8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    filter:blur(0);
+  }
 }
 
 .card{
-  width:min(92vw,600px);
-  padding:38px 27px;
-  border:1px solid var(--line);
-  border-radius:28px;
+  width:100%;
+  padding:45px 30px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:30px;
   background:linear-gradient(
     145deg,
-    rgba(255,255,255,.10),
+    rgba(255,255,255,.105),
     rgba(255,255,255,.035)
   );
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
   box-shadow:
-    0 25px 80px rgba(0,0,0,.42),
-    inset 0 1px rgba(255,255,255,.10);
-  text-align:center;
+    0 30px 90px rgba(0,0,0,.35),
+    inset 0 1px rgba(255,255,255,.08);
+  position:relative;
+  overflow:hidden;
+}
+
+.card:before{
+  content:"";
+  position:absolute;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  background:rgba(221,190,255,.09);
+  filter:blur(50px);
+  top:-100px;
+  left:-80px;
+}
+
+.card:after{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:rgba(255,180,215,.07);
+  filter:blur(55px);
+  right:-70px;
+  bottom:-80px;
+}
+
+.content{
+  position:relative;
+  z-index:2;
 }
 
 .eyebrow{
-  font-size:11px;
-  letter-spacing:3px;
   text-transform:uppercase;
-  color:#aaa4bb;
-  margin-bottom:18px;
+  letter-spacing:4px;
+  font-size:10px;
+  opacity:.55;
+  margin-bottom:22px;
 }
 
 h1{
-  font-family:'Playfair Display',serif;
-  font-weight:500;
-  font-size:clamp(34px,8vw,58px);
+  font-family:"Playfair Display",serif;
+  font-size:clamp(35px,8vw,58px);
   line-height:1.08;
-}
-
-h2{
-  font-family:'Playfair Display',serif;
   font-weight:500;
-  font-size:clamp(28px,7vw,44px);
-  line-height:1.15;
+  margin-bottom:20px;
 }
 
-.message{
-  margin:20px auto 28px;
-  max-width:470px;
-  color:#e7e3ed;
-  font-size:16px;
-  line-height:1.8;
+.script{
+  font-family:"Caveat",cursive;
+  font-size:31px;
+  color:#e9d9ff;
 }
 
-.cursive{
-  font-family:'Caveat',cursive;
-  color:var(--pink);
-  font-size:25px;
+p{
+  line-height:1.75;
+  font-size:15px;
+  color:rgba(255,255,255,.76);
+}
+
+.highlight{
+  color:#fff;
 }
 
 button{
-  border:1px solid rgba(255,255,255,.20);
-  background:rgba(255,255,255,.09);
-  color:white;
+  border:0;
+  margin-top:30px;
   padding:13px 22px;
   border-radius:999px;
-  font-family:'DM Sans',sans-serif;
-  font-size:14px;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.16);
+  color:white;
+  font:500 13px "DM Sans",sans-serif;
   cursor:pointer;
   transition:.3s ease;
-  box-shadow:0 8px 30px rgba(0,0,0,.18);
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
 }
 
 button:hover{
+  transform:translateY(-3px);
   background:rgba(255,255,255,.16);
-  transform:translateY(-2px);
+  box-shadow:0 15px 35px rgba(0,0,0,.3);
 }
 
 button:active{
   transform:scale(.96);
 }
 
-.primary{
-  background:linear-gradient(
-    120deg,
-    rgba(224,191,216,.20),
-    rgba(187,181,239,.18)
-  );
-}
-
-.challenge-buttons{
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-top:22px;
-}
-
-.choice{
-  min-width:145px;
-}
-
-.choice-result{
-  min-height:30px;
-  margin-top:20px;
-  color:#d9d3e1;
-  font-family:'Caveat',cursive;
-  font-size:25px;
-}
-
-/* BIRTHDAY */
-.birthday-card{
-  position:relative;
-  overflow:hidden;
-}
-
-.countdown{
-  font-family:'Playfair Display',serif;
-  font-size:64px;
-  margin-bottom:15px;
-  transition:.5s;
-}
-
-.birthday-title{
-  opacity:0;
-  transform:translateY(15px) scale(.94);
-}
-
-.birthday-title.show{
-  animation:birthdayPop 1.1s cubic-bezier(.2,.8,.2,1) forwards;
-}
-
-@keyframes birthdayPop{
-  0%{opacity:0;transform:translateY(18px) scale(.90)}
-  55%{opacity:1;transform:translateY(-4px) scale(1.04)}
-  100%{opacity:1;transform:translateY(0) scale(1)}
-}
-
-/* balloons */
-.balloon{
+.music{
   position:fixed;
-  width:34px;
-  height:44px;
-  border-radius:50% 50% 48% 48%;
-  opacity:0;
-  z-index:5;
+  top:17px;
+  right:17px;
+  z-index:60;
+  margin:0;
+  padding:9px 13px;
+  font-size:11px;
+  background:rgba(255,255,255,.07);
+}
+
+/* ================= SCREEN 1 ================= */
+
+.entry{
+  position:relative;
+}
+
+.orbit{
+  width:105px;
+  height:105px;
+  margin:0 auto 25px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.16);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  box-shadow:0 0 50px rgba(181,155,255,.16);
+}
+
+.orbit:before,
+.orbit:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.orbit:before{
+  inset:-12px;
+  animation:spin 8s linear infinite;
+}
+
+.orbit:after{
+  inset:12px;
+  animation:spin 5s linear infinite reverse;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+
+.orbit span{
+  font-size:30px;
+  animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+  50%{transform:translateY(-7px) rotate(3deg);}
+}
+
+/* ================= COUNTDOWN ================= */
+
+.count{
+  font-family:"Playfair Display",serif;
+  font-size:85px;
+  min-height:100px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:countPop .8s ease;
+}
+
+@keyframes countPop{
+  0%{opacity:0;transform:scale(.5);}
+  60%{opacity:1;transform:scale(1.12);}
+  100%{transform:scale(1);}
+}
+
+.birthday{
+  display:none;
+}
+
+.birthday.show{
+  display:block;
+  animation:bday .9s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes bday{
+  from{
+    opacity:0;
+    transform:scale(.75) translateY(20px);
+    filter:blur(8px);
+  }
+  to{
+    opacity:1;
+    transform:scale(1) translateY(0);
+    filter:blur(0);
+  }
+}
+
+.balloons{
+  position:absolute;
+  inset:0;
   pointer-events:none;
+}
+
+.balloon{
+  position:absolute;
+  width:30px;
+  height:39px;
+  border-radius:50% 50% 45% 45%;
+  opacity:.65;
+  animation:balloonFloat 5s ease-in-out infinite;
 }
 
 .balloon:after{
   content:"";
   position:absolute;
-  width:1px;
   height:55px;
-  background:rgba(255,255,255,.3);
+  width:1px;
+  background:rgba(255,255,255,.2);
   left:50%;
-  top:43px;
+  top:100%;
 }
 
-.balloon.fly{
-  animation:balloonFly 4.5s ease-out forwards;
-}
+.b1{left:8%;top:15%;background:rgba(210,184,255,.35);}
+.b2{right:8%;top:22%;background:rgba(255,183,215,.3);animation-delay:1s;}
+.b3{left:15%;bottom:12%;background:rgba(166,195,255,.28);animation-delay:2s;}
+.b4{right:16%;bottom:10%;background:rgba(239,207,255,.3);animation-delay:3s;}
 
-@keyframes balloonFly{
-  0%{
-    opacity:0;
-    transform:translateY(100vh) rotate(0deg);
-  }
-  12%{opacity:.8}
-  100%{
-    opacity:0;
-    transform:translateY(-120vh) rotate(18deg);
-  }
+@keyframes balloonFloat{
+  50%{transform:translateY(-14px) rotate(4deg);}
 }
 
 /* confetti */
+
 .confetti{
-  position:fixed;
-  width:6px;
-  height:10px;
-  z-index:6;
+  position:absolute;
+  inset:0;
   pointer-events:none;
+}
+
+.confetti i{
+  position:absolute;
+  width:5px;
+  height:11px;
   opacity:0;
 }
 
-.confetti.fly{
-  animation:confettiFly 2.8s ease-out forwards;
+.confetti.go i{
+  animation:fall 1.8s ease-out forwards;
 }
 
-@keyframes confettiFly{
+@keyframes fall{
   0%{
     opacity:1;
-    transform:translate(0,0) rotate(0);
+    transform:translate(0,-40px) rotate(0);
   }
   100%{
     opacity:0;
-    transform:translate(var(--x),var(--y)) rotate(720deg);
+    transform:translate(var(--x),var(--y)) rotate(450deg);
   }
 }
 
-/* childhood */
-.memory-stage{
-  width:min(92vw,520px);
-  text-align:center;
-}
+/* ================= CHALLENGE ================= */
 
-.memory-label{
-  font-size:11px;
+.challenge-title{
   letter-spacing:3px;
-  color:#9f99ac;
-  margin-bottom:14px;
-  text-transform:uppercase;
+  font-size:11px;
+  opacity:.6;
+  margin-bottom:25px;
 }
 
-.memory-photo-wrap{
-  position:relative;
-  width:min(86vw,430px);
-  margin:0 auto;
-  min-height:430px;
+.choice-wrap{
   display:flex;
-  align-items:center;
+  gap:12px;
   justify-content:center;
+  flex-wrap:wrap;
 }
 
-.memory-photo{
-  width:100%;
-  max-height:58vh;
-  object-fit:contain;
-  border:10px solid #f1eadc;
-  background:#f1eadc;
-  padding:4px;
-  box-shadow:0 20px 60px rgba(0,0,0,.4);
-  opacity:0;
-  transform:translateY(70px) rotate(-4deg);
-  transition:1s cubic-bezier(.2,.8,.2,1);
+.choice{
+  margin-top:18px;
+  min-width:145px;
 }
 
-.memory-photo.show{
-  opacity:1;
-  transform:translateY(0) rotate(-2deg);
+.result{
+  min-height:25px;
+  margin-top:20px;
+  color:#e9d9ff;
+  font-size:14px;
 }
 
-.memory-photo.second{
-  transform:translateY(70px) rotate(4deg);
-}
+/* ================= MEMORY ================= */
 
-.memory-photo.second.show{
-  transform:translateY(0) rotate(2deg);
-}
-
-.memory-caption{
-  margin:18px auto;
-  max-width:430px;
-  color:#d8d3df;
-  font-family:'Caveat',cursive;
-  font-size:23px;
-  opacity:0;
-  transition:.8s ease;
-}
-
-.memory-caption.show{
-  opacity:1;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* SCREEN 8 */
-.gallery-stage{
-  width:min(94vw,620px);
-  height:min(82vh,700px);
-  position:relative;
+.memory-stack{
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:center;
+  gap:28px;
+  margin:25px auto;
 }
 
-.gallery-intro{
-  position:absolute;
-  top:0;
-  text-align:center;
-  z-index:10;
+.photo{
+  width:min(330px,90%);
+  padding:10px 10px 18px;
+  background:#eee7dc;
+  border-radius:5px;
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+  opacity:0;
+}
+
+.photo img{
   width:100%;
+  display:block;
+  border-radius:2px;
 }
 
-.gallery-intro p{
-  color:#aaa5b5;
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
+.photo:nth-child(1){
+  transform:translateY(80px) rotate(-4deg);
 }
 
-.reveal-photo{
-  position:absolute;
-  width:min(63vw,280px);
-  max-height:52vh;
-  object-fit:contain;
-  background:#f1eadc;
-  border:9px solid #f1eadc;
-  padding:4px;
-  box-shadow:0 22px 70px rgba(0,0,0,.5);
-  opacity:0;
-  transform:translateY(100px) scale(.88) rotate(-5deg);
-  transition:1.1s cubic-bezier(.18,.8,.18,1);
-  pointer-events:none;
+.photo:nth-child(2){
+  transform:translateY(80px) rotate(3deg);
 }
 
-.reveal-photo.show{
-  opacity:1;
-  transform:translateY(0) scale(1) rotate(-2deg);
+.memory-stack.show .photo{
+  animation:photoIn .9s cubic-bezier(.2,.8,.2,1) forwards;
 }
 
-.reveal-photo.one{
-  top:14%;
-  left:8%;
-  transform:translateY(100px) rotate(-6deg);
+.memory-stack.show .photo:nth-child(2){
+  animation-delay:.65s;
 }
 
-.reveal-photo.one.show{
-  transform:translateY(0) rotate(-5deg);
+@keyframes photoIn{
+  to{
+    opacity:1;
+    transform:translateY(0) rotate(var(--rot));
+  }
 }
 
-.reveal-photo.two{
-  top:18%;
-  right:7%;
-  transform:translateY(100px) rotate(5deg);
+.photo:nth-child(1){--rot:-4deg;}
+.photo:nth-child(2){--rot:3deg;}
+
+.sorry{
+  margin-top:8px;
+  font-family:"Caveat",cursive;
+  font-size:25px;
 }
 
-.reveal-photo.two.show{
-  transform:translateY(0) rotate(5deg);
+/* ================= GALLERY ================= */
+
+.gallery-item{
+  display:none;
+  animation:itemIn .8s ease;
 }
 
-.reveal-photo.three{
-  bottom:10%;
-  left:9%;
-  transform:translateY(100px) rotate(4deg);
+.gallery-item.show{
+  display:block;
 }
 
-.reveal-photo.three.show{
-  transform:translateY(0) rotate(3deg);
+@keyframes itemIn{
+  from{
+    opacity:0;
+    transform:translateY(25px) scale(.96);
+    filter:blur(5px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+    filter:none;
+  }
 }
 
-.reveal-video{
-  position:absolute;
-  width:min(55vw,260px);
-  max-height:48vh;
-  object-fit:contain;
-  border:9px solid #f1eadc;
-  background:#f1eadc;
-  padding:4px;
-  box-shadow:0 25px 80px rgba(0,0,0,.55);
-  opacity:0;
-  transform:scale(.75);
-  transition:1.1s cubic-bezier(.18,.8,.18,1);
+.polaroid{
+  width:min(310px,88%);
+  margin:20px auto;
+  padding:11px 11px 22px;
+  background:#eee7dc;
+  box-shadow:0 25px 55px rgba(0,0,0,.42);
+  border-radius:5px;
 }
 
-.reveal-video.show{
-  opacity:1;
-  transform:scale(1);
+.polaroid.black{
+  background:#050505;
+  padding-bottom:11px;
 }
 
-.final-shared{
-  position:absolute;
-  width:min(66vw,300px);
-  max-height:55vh;
-  object-fit:contain;
-  border:9px solid #111;
-  background:#111;
-  padding:4px;
-  box-shadow:0 25px 80px rgba(0,0,0,.65);
-  opacity:0;
-  transform:scale(.78) rotate(-2deg);
-  transition:1.2s cubic-bezier(.18,.8,.18,1);
+.polaroid img,
+.polaroid video{
+  width:100%;
+  display:block;
+  border-radius:2px;
 }
 
-.final-shared.show{
-  opacity:1;
-  transform:scale(1) rotate(0);
+.gallery-caption{
+  font-family:"Caveat",cursive;
+  font-size:26px;
+  color:#e8d9f8;
+  margin:17px auto;
 }
 
-.gallery-note{
-  position:absolute;
-  bottom:4%;
-  left:50%;
-  transform:translateX(-50%);
-  width:90%;
-  text-align:center;
-  font-family:'Caveat',cursive;
-  font-size:23px;
-  color:var(--pink);
-  opacity:0;
-  transition:.8s;
+.step{
+  font-size:10px;
+  letter-spacing:3px;
+  opacity:.45;
+  margin-bottom:8px;
 }
 
-.gallery-note.show{
-  opacity:1;
+/* ================= FINAL ================= */
+
+.final{
+  position:relative;
 }
 
-.gallery-button{
-  position:absolute;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:20;
-  white-space:nowrap;
+.final-cake{
+  font-size:50px;
+  margin-bottom:20px;
+  animation:cake 2.5s ease-in-out infinite;
 }
 
-/* final */
-.final-card{
-  background:
-    radial-gradient(circle at 50% 10%,rgba(221,191,219,.13),transparent 35%),
-    linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.035));
-}
-
-.final-card .message{
-  margin-bottom:22px;
+@keyframes cake{
+  50%{transform:translateY(-7px) rotate(2deg);}
 }
 
 .expiry{
-  font-family:'Caveat',cursive;
-  font-size:23px;
-  color:var(--pink);
-  opacity:0;
-  transform:translateY(12px);
-  transition:1s;
-}
-
-.expiry.show{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.cake-sparkle{
-  font-size:32px;
-  margin-top:15px;
-  opacity:0;
-}
-
-.cake-sparkle.show{
-  animation:sparkle .9s ease forwards;
-}
-
-@keyframes sparkle{
-  0%{opacity:0;transform:scale(.5) rotate(-10deg)}
-  60%{opacity:1;transform:scale(1.25) rotate(8deg)}
-  100%{opacity:1;transform:scale(1)}
-}
-
-/* music */
-.music{
-  position:fixed;
-  top:16px;
-  right:16px;
-  z-index:100;
+  margin-top:22px;
+  opacity:.5;
   font-size:12px;
-  padding:9px 14px;
-  opacity:.75;
+  letter-spacing:1px;
 }
 
-/* responsive */
+/* ================= RESPONSIVE ================= */
+
 @media(max-width:500px){
+  #app{
+    padding:20px 13px;
+  }
+
+  .screen{
+    min-height:650px;
+  }
+
   .card{
-    padding:32px 20px;
+    padding:38px 20px;
+    border-radius:25px;
   }
 
-  .message{
-    font-size:15px;
-    line-height:1.7;
+  h1{
+    font-size:38px;
   }
 
-  .memory-photo-wrap{
-    min-height:350px;
+  p{
+    font-size:14px;
   }
 
-  .gallery-stage{
-    height:78vh;
-  }
-
-  .reveal-photo{
-    width:min(45vw,190px);
-  }
-
-  .reveal-video{
-    width:min(52vw,220px);
-  }
-
-  .final-shared{
-    width:min(62vw,250px);
+  .music{
+    top:12px;
+    right:12px;
   }
 }
 </style>
@@ -587,535 +620,483 @@ button:active{
 
 <body>
 
-<div id="stars"></div>
+<div class="bg">
+  <div class="aurora a1"></div>
+  <div class="aurora a2"></div>
+  <div class="aurora a3"></div>
+  <div class="stars" id="stars"></div>
+</div>
 
+<div class="grain"></div>
+
+<button class="music" id="musicBtn">🔊 Vibe</button>
 <audio id="music" loop>
-  <!-- BAAD MEIN YAHAN music.mp3 FILE ADD KARNA -->
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<button class="music" onclick="toggleMusic()">🔊 Vibe</button>
+<main id="app">
 
-<div id="app">
+<!-- ================= SCREEN 1 ================= -->
 
-<!-- SCREEN 1 -->
-<section class="screen active" id="s1">
-  <div class="card">
-    <div class="eyebrow">a tiny warning ✦</div>
+<section class="screen active" id="screen1">
+  <div class="card entry">
+    <div class="content">
 
-    <h1>Oye, Birthday Girl 👀</h1>
+      <div class="orbit">
+        <span>✦</span>
+      </div>
 
-    <p class="message">
-      Aage badhne se pehle ek warning…<br>
-      Ye koi normal birthday wish nahi hai.
-    </p>
+      <div class="eyebrow">a tiny birthday experiment</div>
 
-    <button class="primary" onclick="nextScreen()">
-      Risk lena hai? 😏
-    </button>
-  </div>
-</section>
+      <h1>Oye,<br>Birthday Girl 👀</h1>
 
-
-<!-- SCREEN 2 -->
-<section class="screen" id="s2">
-  <div class="card">
-    <div class="eyebrow">attitude check</div>
-
-    <h2>Okay... tum aa hi gayi.</h2>
-
-    <p class="message">
-      Mujhe laga birthday ke din<br>
-      attitude thoda kam hoga. 😌<br><br>
-      Apparently...<br>
-      I was wrong. 😂
-    </p>
-
-    <button onclick="nextScreen()">
-      Next, Smarty →
-    </button>
-  </div>
-</section>
-
-
-<!-- SCREEN 3 -->
-<section class="screen" id="s3">
-  <div class="card">
-    <div class="eyebrow">challenge no. 1</div>
-
-    <h2>Without smiling...</h2>
-
-    <p class="message">
-      next screen padhna.<br>
-      Haan...<br>
-      itna easy bhi nahi hai. 😌
-    </p>
-
-    <button class="primary" onclick="nextScreen()">
-      I accept 😤
-    </button>
-  </div>
-</section>
-
-
-<!-- SCREEN 4 -->
-<section class="screen" id="s4">
-  <div class="card">
-    <div class="eyebrow">one tiny countdown</div>
-
-    <div id="countdown" class="countdown">3</div>
-
-    <div id="birthdayTitle" class="birthday-title">
-      <h1>Happy Birthday 🎂</h1>
-
-      <p class="message">
-        to the girl who somehow manages to be<br>
-        <b>cute + annoying</b><br>
-        at exactly the same time.<br><br>
-        Honestly...<br>
-        quite a talent. 😂
+      <p>
+        Aage badhne se pehle ek warning...
+        <br>
+        <span class="highlight">Ye koi normal birthday wish nahi hai.</span>
       </p>
 
+      <button onclick="nextScreen()">Risk lena hai? 😏</button>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= SCREEN 2 ================= -->
+
+<section class="screen" id="screen2">
+  <div class="card">
+    <div class="content">
+
+      <div class="eyebrow">attitude check</div>
+
+      <h1>Okay...<br>tum aa hi gayi.</h1>
+
+      <p>
+        Mujhe laga birthday ke din<br>
+        attitude thoda kam hoga. 😌
+        <br><br>
+        Apparently...
+        <br>
+        <span class="highlight">I was wrong. 😂</span>
+      </p>
+
+      <button onclick="nextScreen()">Next, Smarty →</button>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= SCREEN 3 ================= -->
+
+<section class="screen" id="screen3">
+  <div class="card">
+    <div class="content">
+
+      <div class="challenge-title">CHALLENGE #1</div>
+
+      <h1>Without smiling,<br>next screen padhna.</h1>
+
+      <p>
+        Haan...<br>
+        itna easy bhi nahi hai. 😌
+      </p>
+
+      <button onclick="nextScreen()">I accept 😤</button>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= SCREEN 4 ================= -->
+
+<section class="screen" id="screen4">
+  <div class="card">
+
+    <div class="balloons">
+      <div class="balloon b1"></div>
+      <div class="balloon b2"></div>
+      <div class="balloon b3"></div>
+      <div class="balloon b4"></div>
+    </div>
+
+    <div class="confetti" id="confetti"></div>
+
+    <div class="content">
+
+      <div class="count" id="count">3</div>
+
+      <div class="birthday" id="birthday">
+        <div class="eyebrow">the important part</div>
+
+        <h1>Happy Birthday 🎂</h1>
+
+        <p>
+          to the girl who somehow manages to be
+          <br>
+          <span class="highlight">cute + annoying</span>
+          <br>
+          at exactly the same time.
+          <br><br>
+          Honestly...
+          <br>
+          quite a talent. 😂
+        </p>
+
+        <button onclick="nextScreen()">Don't flatter me 🙄</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= SCREEN 5 ================= -->
+
+<section class="screen" id="screen5">
+  <div class="card">
+    <div class="content">
+
+      <div class="challenge-title">CHALLENGE #2</div>
+
+      <h1>Pick your actual personality:</h1>
+
+      <div class="choice-wrap">
+        <button class="choice" onclick="personality('innocent')">
+          I'm innocent 😇
+        </button>
+
+        <button class="choice" onclick="personality('trouble')">
+          I'm trouble 😈
+        </button>
+      </div>
+
+      <div class="result" id="result"></div>
+
+      <button id="challengeNext"
+              style="display:none"
+              onclick="nextScreen()">
+        Okay, next →
+      </button>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= SCREEN 6 ================= -->
+
+<section class="screen" id="screen6">
+  <div class="card">
+    <div class="content">
+
+      <div class="eyebrow">almost sweet</div>
+
+      <h1>I was going to write<br>something really sweet here...</h1>
+
+      <p>
+        Then I remembered your attitude.
+        <br>
+        So...
+        <br>
+        never mind. 😭
+        <br><br>
+
+        But still—
+        <br>
+        Birthday hai tumhara.
+        <br>
+        <span class="highlight">
+        Thoda special treatment toh banta hai. 😉
+        </span>
+      </p>
+
+      <button onclick="nextScreen()">Fine, show me →</button>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= SCREEN 7 ================= -->
+
+<section class="screen" id="screen7">
+  <div class="card">
+    <div class="content">
+
+      <div class="eyebrow">little memory</div>
+
+      <h1>A tiny trip<br>to the past... 👀</h1>
+
+      <div class="memory-stack" id="memoryStack">
+
+        <div class="photo">
+          <img src="childhood1.jpg" alt="A little throwback">
+        </div>
+
+        <div class="photo">
+          <img src="childhood2.jpg" alt="Another little throwback">
+        </div>
+
+      </div>
+
+      <div class="sorry">
+        SORRY SORRY 😭<br>
+        I couldn't resist putting this one here.
+      </div>
+
       <button onclick="nextScreen()">
-        Don't flatter me 🙄
+        Aage? Tumhare liye aur ek surprise hai 👀 →
       </button>
+
     </div>
   </div>
 </section>
 
 
-<!-- SCREEN 5 -->
-<section class="screen" id="s5">
+<!-- ================= SCREEN 8 ================= -->
+
+<section class="screen" id="screen8">
   <div class="card">
-    <div class="eyebrow">challenge no. 2</div>
+    <div class="content">
 
-    <h2>Pick your actual personality</h2>
+      <div class="eyebrow">actual surprise</div>
 
-    <div class="challenge-buttons">
-      <button class="choice" onclick="personality('innocent')">
-        I'm innocent 😇
-      </button>
+      <h1>A few little things. ✦</h1>
 
-      <button class="choice" onclick="personality('trouble')">
-        I'm trouble 😈
-      </button>
+      <!-- 1 -->
+
+      <div class="gallery-item show" id="gallery1">
+
+        <div class="step">01 / 05</div>
+
+        <div class="polaroid">
+          <img src="solo1.jpg" alt="Photo">
+        </div>
+
+        <div class="gallery-caption">
+          just you. ✦
+        </div>
+
+        <button onclick="galleryNext(2)">
+          There's another one →
+        </button>
+
+      </div>
+
+
+      <!-- 2 -->
+
+      <div class="gallery-item" id="gallery2">
+
+        <div class="step">02 / 05</div>
+
+        <div class="polaroid">
+          <img src="shared1.jpg" alt="Throwback">
+        </div>
+
+        <div class="gallery-caption">
+          Funny how some moments stay memorable. ✦
+        </div>
+
+        <button onclick="galleryNext(3)">
+          And one more →
+        </button>
+
+      </div>
+
+
+      <!-- 3 -->
+
+      <div class="gallery-item" id="gallery3">
+
+        <div class="step">03 / 05</div>
+
+        <div class="polaroid">
+          <img src="solo2.jpg" alt="Photo">
+        </div>
+
+        <div class="gallery-caption">
+          Yeah... this one had something. ✦
+        </div>
+
+        <button onclick="galleryNext(4)">
+          Okay... now the interesting part 👀
+        </button>
+
+      </div>
+
+
+      <!-- 4 -->
+
+      <div class="gallery-item" id="gallery4">
+
+        <div class="step">04 / 05</div>
+
+        <div class="polaroid">
+          <video
+            src="diti-video.mp4"
+            autoplay
+            muted
+            playsinline
+            loop
+            id="ditiVideo">
+          </video>
+        </div>
+
+        <div class="gallery-caption">
+          Out of all the little things... this one still makes me smile. ✦
+        </div>
+
+        <button onclick="galleryNext(5)">
+          One last one...
+        </button>
+
+      </div>
+
+
+      <!-- 5 -->
+
+      <div class="gallery-item" id="gallery5">
+
+        <div class="step">05 / 05</div>
+
+        <div class="polaroid black">
+          <img src="shared2.jpg" alt="Throwback">
+        </div>
+
+        <div class="gallery-caption">
+          Some things just deserve one more look. ✦
+        </div>
+
+        <button onclick="nextScreen()">
+          Okay... final page → 
+        </button>
+
+      </div>
+
     </div>
-
-    <div id="choiceResult" class="choice-result"></div>
-
-    <button id="challengeNext"
-            class="primary hidden"
-            style="margin-top:20px"
-            onclick="nextScreen()">
-      Okay, next → 
-    </button>
   </div>
 </section>
 
 
-<!-- SCREEN 6 -->
-<section class="screen" id="s6">
-  <div class="card">
-    <div class="eyebrow">almost sweet</div>
+<!-- ================= SCREEN 9 ================= -->
 
-    <h2>I was going to write...</h2>
+<section class="screen" id="screen9">
+  <div class="card final">
+    <div class="content">
 
-    <p class="message">
-      something really sweet here...<br>
-      Then I remembered your attitude.<br>
-      So...<br>
-      never mind. 😭<br><br>
+      <div class="final-cake">🎂</div>
 
-      But still—<br>
-      Birthday hai tumhara.<br>
-      Thoda special treatment toh banta hai. 😉
-    </p>
+      <div class="eyebrow">one last thing</div>
 
-    <button class="primary" onclick="nextScreen()">
-      Fine, show me → 
-    </button>
+      <h1>Anyway...<br>Happy Birthday, Diti. ✨</h1>
+
+      <p>
+        Keep being your
+        <br>
+        <span class="highlight">
+        cute, charming,<br>
+        thodi-si-nakhre-wali self. 😌
+        </span>
+        <br><br>
+
+        Because honestly...
+        <br>
+        it suits you.
+        <br><br>
+
+        Aaj bas birthday enjoy karo,
+        <br>
+        cake khao aur...
+        <br>
+        thoda extra special feel kar lena. ✨
+      </p>
+
+      <div class="script">
+        Happy Birthday, Don. 🎂
+      </div>
+
+      <div class="expiry">
+        Birthday privilege officially expires at midnight. ✦
+      </div>
+
+    </div>
   </div>
 </section>
 
-
-<!-- SCREEN 7 -->
-<section class="screen" id="s7">
-  <div class="memory-stage">
-
-    <div class="memory-label">
-      a tiny trip to the past... 👀
-    </div>
-
-    <div class="memory-photo-wrap">
-
-      <!-- CHILDHOOD PHOTO 1 -->
-      <img
-        id="child1"
-        class="memory-photo"
-        src="childhood1.jpg"
-        alt="Childhood memory"
-      >
-
-      <!-- CHILDHOOD PHOTO 2 -->
-      <img
-        id="child2"
-        class="memory-photo second hidden"
-        src="childhood2.jpg"
-        alt="Childhood memory"
-      >
-
-    </div>
-
-    <div id="memoryCaption" class="memory-caption">
-      Madam ka attitude toh bachpan se hi loading mein tha. 😂
-    </div>
-
-    <button
-      id="memoryButton"
-      class="primary"
-      onclick="childhoodNext()">
-      Aage dekho 👀 →
-    </button>
-
-  </div>
-</section>
-
-
-<!-- SCREEN 8 -->
-<section class="screen" id="s8">
-
-  <div class="gallery-stage">
-
-    <div class="gallery-intro">
-      <p id="galleryLabel">one by one... ✦</p>
-    </div>
-
-    <!-- 1: SOLO PHOTO -->
-    <img
-      id="gallery1"
-      class="reveal-photo one"
-      src="solo1.jpg"
-      alt="Photo"
-    >
-
-    <!-- 2: TOGETHER PHOTO -->
-    <img
-      id="gallery2"
-      class="reveal-photo two"
-      src="shared1.jpg"
-      alt="Throwback"
-    >
-
-    <!-- 3: SOLO PHOTO -->
-    <img
-      id="gallery3"
-      class="reveal-photo three"
-      src="solo2.jpg"
-      alt="Photo"
-    >
-
-    <!-- 4: CENTER VIDEO -->
-    <video
-      id="galleryVideo"
-      class="reveal-video"
-      muted
-      playsinline
-      loop>
-      <source src="diti-video.mp4" type="video/mp4">
-    </video>
-
-    <!-- 5: FINAL TOGETHER PHOTO -->
-    <img
-      id="gallery5"
-      class="final-shared"
-      src="shared2.jpg"
-      alt="Throwback"
-    >
-
-    <div id="galleryNote" class="gallery-note">
-      Yeah… this one had something. ✦
-    </div>
-
-    <button
-      id="galleryButton"
-      class="gallery-button primary"
-      onclick="galleryNext()">
-      Open this ✦
-    </button>
-
-  </div>
-</section>
-
-
-<!-- SCREEN 9 -->
-<section class="screen" id="s9">
-  <div class="card final-card">
-
-    <div class="eyebrow">one last thing</div>
-
-    <h2>Anyway...</h2>
-
-    <p class="message">
-      Happy Birthday, Diti. 🎂<br><br>
-
-      Keep being your<br>
-      cute, charming,<br>
-      thodi-si-nakhre-wali self. 😌<br><br>
-
-      Because honestly...<br>
-      it suits you.<br><br>
-
-      Aaj bas birthday enjoy karo,<br>
-      cake khao aur...<br>
-      thoda extra special feel kar lena. ✨
-    </p>
-
-    <h2 style="font-size:28px;">
-      Happy Birthday, Don. 🎂
-    </h2>
-
-    <div id="expiry" class="expiry">
-      Birthday privilege officially expires at midnight. ✦
-    </div>
-
-    <div id="cakeSparkle" class="cake-sparkle">
-      ✨🎂✨
-    </div>
-
-  </div>
-</section>
-
-</div>
+</main>
 
 
 <script>
 
-/* -------------------------
-   STARS
-------------------------- */
+/* ================= STAR FIELD ================= */
 
 const stars = document.getElementById("stars");
 
 for(let i=0;i<85;i++){
-  const s=document.createElement("span");
+
+  const s = document.createElement("span");
+
   s.className="star";
-  s.style.left=Math.random()*100+"%";
-  s.style.top=Math.random()*100+"%";
-  s.style.animationDelay=(Math.random()*4)+"s";
-  s.style.animationDuration=(2+Math.random()*4)+"s";
+
+  s.style.left = Math.random()*100+"%";
+  s.style.top = Math.random()*100+"%";
+  s.style.animationDelay = (Math.random()*4)+"s";
+  s.style.animationDuration = (2+Math.random()*4)+"s";
+
   stars.appendChild(s);
 }
 
 
-/* -------------------------
-   SCREEN SYSTEM
-------------------------- */
+/* ================= SCREEN NAVIGATION ================= */
 
-let current=1;
+let currentScreen = 1;
 
-function showScreen(n){
+function showScreen(number){
 
   document.querySelectorAll(".screen").forEach(screen=>{
     screen.classList.remove("active");
   });
 
-  const target=document.getElementById("s"+n);
+  const target = document.getElementById("screen"+number);
 
   if(target){
     target.classList.add("active");
-    current=n;
+    currentScreen = number;
+    window.scrollTo({top:0,behavior:"smooth"});
   }
 
-  if(n===4){
-    startBirthdayCountdown();
+  if(number === 4){
+    startCountdown();
   }
 
-  if(n===7){
-    startChildhood();
+  if(number === 7){
+    setTimeout(()=>{
+      document.getElementById("memoryStack")
+        .classList.add("show");
+    },250);
   }
 
-  if(n===8){
-    startGallery();
-  }
-
-  if(n===9){
-    startFinal();
+  if(number === 9){
+    startFinalConfetti();
   }
 }
 
 function nextScreen(){
-  if(current<9){
-    showScreen(current+1);
+  if(currentScreen < 9){
+    showScreen(currentScreen + 1);
   }
 }
 
 
-/* -------------------------
-   MUSIC
-------------------------- */
+/* ================= COUNTDOWN ================= */
 
-const music=document.getElementById("music");
-let musicStarted=false;
+let countdownStarted = false;
 
-function toggleMusic(){
+function startCountdown(){
 
-  if(music.paused){
-
-    music.play().then(()=>{
-      musicStarted=true;
-    }).catch(()=>{
-      alert("Pehle music.mp3 file GitHub mein upload karo ✦");
-    });
-
-  }else{
-    music.pause();
-  }
-}
-
-
-/*
-  Browser autoplay restrictions ko respect karte hue
-  music automatically force nahi kiya gaya.
-  Screen 1 ke first interaction ke baad music start kar sakte ho.
-*/
-
-document.addEventListener("click",function(){
-
-  if(!musicStarted && current>=1){
-
-    music.play()
-      .then(()=>{
-        musicStarted=true;
-      })
-      .catch(()=>{});
-
-  }
-
-},{once:true});
-
-
-/* -------------------------
-   BIRTHDAY COUNTDOWN
-------------------------- */
-
-let birthdayStarted=false;
-
-function startBirthdayCountdown(){
-
-  if(birthdayStarted) return;
-
-  birthdayStarted=true;
-
-  const count=document.getElementById("countdown");
-  const title=document.getElementById("birthdayTitle");
-
-  let number=3;
-
-  count.textContent=number;
-
-  const timer=setInterval(()=>{
-
-    number--;
-
-    if(number>0){
-
-      count.textContent=number;
-
-    }else{
-
-      clearInterval(timer);
-
-      count.style.opacity="0";
-
-      setTimeout(()=>{
-
-        title.classList.add("show");
-
-        createBalloons();
-        createConfetti();
-
-      },450);
-
-    }
-
-  },850);
-}
-
-
-/* -------------------------
-   BALLOONS
-------------------------- */
-
-function createBalloons(){
-
-  for(let i=0;i<15;i++){
-
-    const balloon=document.createElement("div");
-
-    balloon.className="balloon";
-
-    const colors=[
-      "rgba(239,193,217,.70)",
-      "rgba(195,188,238,.65)",
-      "rgba(235,216,190,.60)",
-      "rgba(180,206,224,.60)"
-    ];
-
-    balloon.style.background=colors[
-      Math.floor(Math.random()*colors.length)
-    ];
-
-    balloon.style.left=(5+Math.random()*90)+"%";
-
-    balloon.style.bottom="-70px";
-
-    balloon.style.animationDelay=(Math.random()*1.5)+"s";
-
-    balloon.style.transform=
-      `scale(${.7+Math.random()*.6})`;
-
-    document.body.appendChild(balloon);
-
-    setTimeout(()=>{
-      balloon.classList.add("fly");
-    },30);
-
-    setTimeout(()=>{
-      balloon.remove();
-    },6500);
-  }
-}
-
-
-/* -------------------------
-   CONFETTI
-------------------------- */
-
-function createConfetti(){
-
-  for(let burst=0;burst<2;burst++){
-
-    setTimeout(()=>{
-
-      for(let i=0;i<32;i++){
-
-        const c=document.createElement("div");
-
-        c.className="confetti";
-
-        const shapes=[
-          "rgba(242,201,223,.9)",
-          "rgba(216,208,255,.9)",
-          "rgba(239,224,193,.9)",
-          "rgba(190,215,225,.9)"
-        ];
-
-        c.style.background=
-          shapes[Math.floor(Math.random()*shapes.length)];
-
-        c.style.left=(50+Math.random()*12-6)+"%";
-        c.style.top="42%";
-
-        c.style.setProperty(
-          "--x",
-          (Math.random
+  if(countdownStarte
