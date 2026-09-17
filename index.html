@@ -1,8 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For Diti ✦</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+font-family:"DM Sans",sans-serif;color:#f8f5fa;
+background:#080b1d;
+min-height:100vh;overflow-x:hidden;
+}
+body:before{
+content:"";position:fixed;inset:0;z-index:-3;
+background:
+radial-gradient(circle at 20% 20%,#7562b51c 0 2px,transparent 3px),
+radial-gradient(circle at 80% 35%,#fff8 0 1px,transparent 2px),
+radial-gradient(circle at 45% 75%,#d7b9ff22 0 2px,transparent 3px),
+radial-gradient(circle at 90% 85%,#fff6 0 1px,transparent 2px),
+radial-gradient(circle at 10% 90%,#b99cff18 0 2px,transparent 3px);
+background-size:180px 180px,120px 120px,220px 220px,160px 160px,260px 260px;
+animation:stars 18s linear infinite;
+}
+body:after{
+content:"";position:fixed;inset:-30%;z-index:-2;
+background:radial-gradient(circle,#9e83ff16,transparent 28%),
+radial-gradient(circle at 80% 70%,#ff9ed112,transparent 25%);
+filter:blur(40px);animation:float 8s ease-in-out infinite alternate;
+}
+@keyframes stars{to{background-position:180px 120px,-100px 80px,100px -100px,-80px 90px,120px -120px}}
+@keyframes float{to{transform:translate(4%,3%) scale(1.08)}}
+#app{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:22px}
+.screen{display:none;width:100%;max-width:650px;text-align:center;animation:in .65s ease}
+.screen.active{display:block}
+@keyframes in{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}
+.card{
+position:relative;padding:42px 25px;border:1px solid #ffffff18;
+background:#ffffff0b;backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);border-radius:28px;
+box-shadow:0 20px 70px #0007;
+overflow:hidden
+}
+.card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#ffffff0b,transparent 45%,#a98cff08);pointer-events:none}
+h1,h2{font-family:"Playfair Display",serif;font-weight:500}
+h1{font-size:clamp(34px,9vw,58px);line-height:1.1}
+h2{font-size:clamp(27px,7vw,42px);margin-bottom:15px}
+p{font-size:16px;line-height:1.7;color:#eeeaf4}
+.small{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#bbb1ca;margin-bottom:16px}
+.cursive{font-family:Caveat,cursive;font-size:27px;color:#e8d7ff}
+button{
+border:1px solid #ffffff22;background:#ffffff10;color:white;
+padding:13px 22px;border-radius:999px;font:500 14px "DM Sans";
+cursor:pointer;margin-top:25px;transition:.25s
+}
+button:hover{background:#ffffff1c;transform:translateY(-2px)}
+.music{
+position:fixed;right:14px;top:14px;z-index:20;
+margin:0;padding:9px 14px;font-size:12px
+}
+.dots{margin-top:20px;color:#9188a3;font-size:12px;letter-spacing:4px}
+.count{font-family:"Playfair Display";font-size:80px;margin:5px 0 10px;min-height:100px}
+.bday{display:none}
+.bday h1{font-size:clamp(40px,11vw,68px)}
+.balloon{
+position:absolute;width:25px;height:33px;border-radius:50%;
+background:#d8c2ff66;filter:blur(.2px);animation:ball 4s ease-in-out infinite
+}
+.balloon:nth-child(1){left:9%;top:12%}.balloon:nth-child(2){right:10%;top:18%;animation-delay:1s}
+.balloon:nth-child(3){left:18%;bottom:15%;animation-delay:2s}.balloon:nth-child(4){right:18%;bottom:12%;animation-delay:1.5s}
+@keyframes ball{50%{transform:translateY(-15px) rotate(5deg)}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:10}
+.piece{position:absolute;width:5px;height:11px;background:#fff;animation:fall 1.8s ease-out forwards}
+@keyframes fall{to{transform:translate(var(--x),75vh) rotate(500deg);opacity:0}}
+.choice{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.choice button{margin:0}
+.result{min-height:25px;margin-top:17px;color:#dfd0ef}
+.mem{margin-top:20px;display:none}
+.mem.show{display:block;animation:photo .9s ease both}
+.mem img{
+width:min(88%,430px);border:10px solid #f4eee5;
+border-bottom-width:34px;border-radius:5px;
+box-shadow:0 18px 40px #0008;margin:10px;
+object-fit:cover
+}
+.mem:nth-of-type(2){animation-delay:.5s}
+@keyframes photo{from{opacity:0;transform:translateY(50px) rotate(-4deg);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+.gallery{min-height:430px;display:flex;align-items:center;justify-content:center;position:relative}
+.item{display:none;animation:item .7s ease}
+.item.show{display:block}
+@keyframes item{from{opacity:0;transform:scale(.92) translateY(18px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.polaroid{
+background:#f3eee5;color:#332b35;padding:10px 10px 18px;
+box-shadow:0 20px 50px #0009;transform:rotate(-2deg);
+max-width:310px;margin:auto
+}
+.polaroid img{width:100%;display:block;max-height:360px;object-fit:cover}
+.polaroid .cap{font-family:Caveat;font-size:23px;padding-top:7px}
+.videoBox{
+background:#050509;padding:8px;max-width:320px;margin:auto;
+box-shadow:0 20px 55px #0009
+}
+.videoBox video{width:100%;display:block;max-height:430px;object-fit:cover}
+.note{margin-top:18px;font-family:Caveat;font-size:24px;color:#dfcfff}
+.finalLine{margin-top:20px;opacity:0;animation:appear 1s 1.5s forwards}
+@keyframes appear{to{opacity:1}}
+.cake{font-size:45px;margin:20px 0;animation:spark 1.5s ease-in-out infinite alternate}
+@keyframes spark{to{transform:scale(1.08) rotate(2deg);filter:drop-shadow(0 0 12px #fff)}}
+@media(max-width:480px){.card{padding:34px 18px}.gallery{min-height:390px}.polaroid{max-width:280px}}
+</style>
+</head>
+
+<body>
+<button class="music" onclick="toggleMusic()" id="musicBtn">🔊 Vibe</button>
+<audio id="music" loop src="music.mp3"></audio>
+<div id="confetti" class="confetti"></div>
+
+<main id="app">
+
+<section class="screen active" id="s1">
+<div class="card">
+<div class="small">A tiny birthday experiment ✦</div>
+<h1>Oye, Birthday Girl 👀</h1>
+<p>Aage badhne se pehle ek warning…<br>Ye koi normal birthday wish nahi hai.</p>
+<button onclick="go(2)">Risk lena hai? 😏</button>
+<div class="dots">✦ · · · · · · · · ✦</div>
+</div>
+</section>
+
+<section class="screen" id="s2">
+<div class="card">
+<div class="cursive">Okay... tum aa hi gayi.</div>
+<h2>Attitude Check 😌</h2>
+<p>Mujhe laga birthday ke din<br>attitude thoda kam hoga.</p>
+<p>Apparently...<br>I was wrong. 😂</p>
+<button onclick="go(3)">Next, Smarty →</button>
+</div>
+</section>
+
+<section class="screen" id="s3">
+<div class="card">
+<div class="small">Challenge #1</div>
+<h2>Without smiling...</h2>
+<p>next screen padhna.</p>
+<p>Haan...<br>itna easy bhi nahi hai. 😌</p>
+<button onclick="go(4)">I accept 😤</button>
+</div>
+</section>
+
+<section class="screen" id="s4">
+<div class="card">
+<span class="balloon"></span><span class="balloon"></span>
+<span class="balloon"></span><span class="balloon"></span>
+<div class="count" id="count">3</div>
+<div class="bday" id="bday">
+<div class="cursive">finally...</div>
+<h1>Happy Birthday 🎂</h1>
+<p>to the girl who somehow manages to be<br><b>cute + annoying</b><br>at exactly the same time.</p>
+<p>Honestly... quite a talent. 😂</p>
+<button onclick="go(5)">Don't flatter me 🙄</button>
+</div>
+</div>
+</section>
+
+<section class="screen" id="s5">
+<div class="card">
+<div class="small">Challenge #2</div>
+<h2>Pick your actual personality.</h2>
+<div class="choice">
+<button onclick="choice('innocent')">I'm innocent 😇</button>
+<button onclick="choice('trouble')">I'm trouble 😈</button>
+</div>
+<div class="result" id="result"></div>
+<button id="next5" style="display:none" onclick="go(6)">Okay, next →</button>
+</div>
+</section>
+
+<section class="screen" id="s6">
+<div class="card">
+<div class="cursive">Almost sweet...</div>
+<h2>I was going to write<br>something really sweet here...</h2>
+<p>Then I remembered your attitude.</p>
+<p>So...<br>never mind. 😭</p>
+<p>But still—<br>Birthday hai tumhara.<br>Thoda special treatment toh banta hai. 😉</p>
+<button onclick="go(7)">Fine, show me →</button>
+</div>
+</section>
+
+<section class="screen" id="s7">
+<div class="card">
+<div class="small">A tiny trip to the past... 👀</div>
+<div class="mem" id="m1">
+<img src="childhood1.jpg">
+</div>
+<div class="mem" id="m2">
+<img src="childhood2.jpg">
+</div>
+<p id="sorry" style="display:none;margin-top:15px">SORRY SORRY 😭<br>I couldn't resist putting this one here.</p>
+<button id="memNext" onclick="memoryNext()">Open the first one ✦</button>
+</div>
+</section>
+
+<section class="screen" id="s8">
+<div class="card">
+<div class="small">Actual surprise ✦</div>
+<div class="gallery">
+
+<div class="item show" id="g1">
+<div class="polaroid">
+<img src="solo1.jpg">
+<div class="cap">Just you. ✦</div>
+</div>
+</div>
+
+<div class="item" id="g2">
+<div class="polaroid">
+<img src="shared1.jpg">
+<div class="cap">Funny how some moments stay memorable. ✦</div>
+</div>
+</div>
+
+<div class="item" id="g3">
+<div class="polaroid">
+<img src="solo2.jpg">
+<div class="cap">A little something worth keeping. ✦</div>
+</div>
+</div>
+
+<div class="item" id="g4">
+<div class="videoBox">
+<video id="vid" src="diti-video.mp4" muted playsinline></video>
+</div>
+<div class="note">Out of all the little moments... this one still makes me smile. ✦</div>
+</div>
+
+<div class="item" id="g5">
+<div class="videoBox">
+<img src="shared2.jpg" style="width:100%;display:block">
+</div>
+<div class="note">Yeah… this one had something. ✦</div>
+</div>
+
+</div>
+<button id="galleryBtn" onclick="galleryNext()">Open the first one ✦</button>
+</div>
+</section>
+
+<section class="screen" id="s9">
+<div class="card">
+<div class="cake">🎂</div>
+<div class="cursive">Anyway...</div>
+<h2>Happy Birthday, Diti. 🎂</h2>
+<p>Keep being your<br><b>cute, charming,<br>thodi-si-nakhre-wali</b> self. 😌</p>
+<p>Because honestly...<br>it suits you.</p>
+<p>Aaj bas birthday enjoy karo,<br>cake khao aur...<br>thoda extra special feel kar lena. ✨</p>
+<h2 style="margin-top:25px">Happy Birthday, Don. 🎂</h2>
+<p class="finalLine">Birthday privilege officially expires at midnight. ✦</p>
+</div>
+</section>
+
+</main>
+
 <script>
-function nextScreen(){
-  document.getElementById("screen1").classList.remove("active");
-  document.getElementById("screen2").classList.add("active");
+let musicOn=false,memStep=0,gStep=1;
+
+function go(n){
+document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+document.getElementById("s"+n).classList.add("active");
+if(n===4)startCount();
+if(n===7)setTimeout(()=>document.getElementById("memNext").focus(),100);
+if(n===9)burst();
+window.scrollTo(0,0);
+}
+
+function startCount(){
+let c=document.getElementById("count"),b=document.getElementById("bday"),n=3;
+c.textContent=n;
+let t=setInterval(()=>{
+n--;
+if(n>0)c.textContent=n;
+else{
+clearInterval(t);
+c.style.display="none";
+b.style.display="block";
+burst();
+}
+},900);
+}
+
+function choice(x){
+let r=document.getElementById("result");
+if(x==="innocent")r.textContent="Nice try. 😌 We both know the answer.";
+else r.textContent="Knew it. 😌 My work here is done.";
+document.getElementById("next5").style.display="inline-block";
+}
+
+function memoryNext(){
+memStep++;
+let btn=document.getElementById("memNext");
+if(memStep===1){
+document.getElementById("m1").classList.add("show");
+btn.textContent="And there's one more... →";
+}else if(memStep===2){
+document.getElementById("m2").classList.add("show");
+btn.textContent="SORRY SORRY 😭 →";
+}else{
+document.getElementById("sorry").style.display="block";
+btn.textContent="Aage? Tumhare liye aur ek surprise hai 👀 →";
+btn.onclick=()=>go(8);
+}
+}
+
+function galleryNext(){
+if(gStep<5){
+document.getElementById("g"+gStep).classList.remove("show");
+gStep++;
+document.getElementById("g"+gStep).classList.add("show");
+if(gStep===2)document.getElementById("galleryBtn").textContent="And one more →";
+if(gStep===3)document.getElementById("galleryBtn").textContent="Keep going ✦";
+if(gStep===4){
+document.getElementById("galleryBtn").textContent="One last one →";
+let v=document.getElementById("vid");
+v.playbackRate=1.12;
+v.play().catch(()=>{});
+}
+if(gStep===5){
+document.getElementById("galleryBtn").textContent="Finish ✦";
+document.getElementById("vid").pause();
+}
+}else go(9);
+}
+
+function toggleMusic(){
+let m=document.getElementById("music"),b=document.getElementById("musicBtn");
+if(!musicOn){
+m.volume=.35;
+m.play().then(()=>{
+musicOn=true;b.textContent="🔇 Music";
+}).catch(()=>alert("Tap again to start the music ✦"));
+}else{
+m.pause();musicOn=false;b.textContent="🔊 Vibe";
+}
+}
+
+function burst(){
+let box=document.getElementById("confetti");
+for(let i=0;i<35;i++){
+let p=document.createElement("i");
+p.className="piece";
+p.style.left=(50+Math.random()*20-10)+"%";
+p.style.top=(25+Math.random()*10)+"%";
+p.style.setProperty("--x",(Math.random()*80-40)+"vw");
+p.style.transform="rotate("+Math.random()*180+"deg)";
+p.style.animationDelay=Math.random()*.3+"s";
+box.appendChild(p);
+setTimeout(()=>p.remove(),2200);
+}
 }
 </script>
 </body>
-</html>
+  </html>
